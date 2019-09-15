@@ -1,6 +1,6 @@
-package org.geez.convert.numerals;
+package org.geez.convert;
 
-public class EthiopicNumerals {
+public class Numeric {
 
 	private static final char ETHIOPIC_ONE          = 0x1369;
 	private static final char ETHIOPIC_TEN          = 0x1372;
