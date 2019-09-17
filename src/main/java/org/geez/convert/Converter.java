@@ -24,10 +24,10 @@ import org.xml.sax.SAXException;
 import com.ibm.icu.text.Transliterator;
 
 /**
-* <h1>Converter</h1>
-* This is an abstract class to be used for defining converters
-* for specific document formats (DOCX, HTML, TXT) or stream 
-* types.
+* <code>Converter</code> is an abstract class to be used for defining special case converters
+* most commonly for legacy Ethiopic font encodings systems (which may be diacritical based or
+* multi-part systems).  The class provides methods for reading ICU transliterations defined in
+* either LDML or plain text files.
 * 
 * @author  Daniel Yacob
 * @version 0.1.0
