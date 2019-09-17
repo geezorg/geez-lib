@@ -23,7 +23,16 @@ import org.xml.sax.SAXException;
 
 import com.ibm.icu.text.Transliterator;
 
-
+/**
+* <h1>Converter</h1>
+* This is an abstract class to be used for defining converters
+* for specific document formats (DOCX, HTML, TXT) or stream 
+* types.
+* 
+* @author  Daniel Yacob
+* @version 0.1.0
+* @since   2019-09-17 
+*/
 public abstract class Converter {
 	protected char huletNeteb = 0x0;
 	public Transliterator xlit = null;
@@ -89,22 +98,50 @@ public abstract class Converter {
 		return rules;	
 	}
 	
-	public String readRulesResourceFile( String rulesFile ) throws IOException, SAXException {
-		if( FilenameUtils.getExtension( rulesFile ).equals( "xml" ) ) {
-			return readRulesResourceFileXML( rulesFile );
+    /**
+     * Returns a single line string of ICU transliteration rules that may be passed to the
+     * ICU <tt>Transliterator.createFromRules</tt> API.
+     * 
+     * @param rulesFileName the file name (or path) for the file containing ICU transliteration rules.
+     * @return a single line String containing the file content
+     * @throws IOException if an error occurs reading the specified file
+     * @throws SAXException if the XML document is invalid
+     * @since 0.1.0
+     */
+	public String readRulesResourceFile( String rulesFileName ) throws IOException, SAXException {
+		if( FilenameUtils.getExtension( rulesFileName ).equals( "xml" ) ) {
+			return readRulesResourceFileXML( rulesFileName );
 		}
 		else {
-			return readRulesResourceFileText( rulesFile );
+			return readRulesResourceFileText( rulesFileName );
 		}
-	}
+	}	
 	
+    /**
+     * Given a text input file, returns a single line string of ICU transliteration rules that may
+     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * 
+     * @param rulesFileTXT the name (or path) of a text file containing ICU transliteration rules.
+     * @return a single line String containing the file content
+     * @throws IOException if an error occurs reading the specified file
+     * @since 0.1.0
+     */
 	public String readRulesResourceFileText( String rulesFileTXT ) throws IOException {
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		InputStream in = classLoader.getResourceAsStream( "tables/" + rulesFileTXT ); 
 		return readRulesFromStream( in );	
 	}
-	
-	
+		
+    /**
+     * Given an LDML input file, returns a single line string of ICU transliteration rules that may
+     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * 
+     * @param rulesFileXML the name (or path) of an XML file containing ICU transliteration rules.
+     * @return a single line String containing the file content
+     * @throws IOException if an error occurs reading the specified file
+     * @throws SAXException if the XML document is invalid
+     * @since 0.1.0
+     */
 	public String readRulesResourceFileXML( String rulesFileXML ) throws IOException, SAXException {		
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		if(! rulesFileXML.contains( "/" ) ) {
@@ -123,8 +160,17 @@ public abstract class Converter {
 		return readRulesFromStream( is );
 	}
 	
+    /**
+     * Given an LDML input string, returns a single line string of ICU transliteration rules that may
+     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * 
+     * @param rulesStringXML a string representation of an LDML document containng ICU transliteration rules.
+     * @return a single line String containing the file content
+     * @throws IOException if an error occurs reading the specified file
+     * @throws SAXException if the XML document is invalid
+     * @since 0.1.0
+     */	
 	public String readRulesStringXML( String rulesStringXML ) throws IOException, SAXException {		
-
 		InputStream rulesStream = new ByteArrayInputStream(rulesStringXML.getBytes());
 	    
 	    Document doc = builder.parse( rulesStream );
@@ -137,7 +183,7 @@ public abstract class Converter {
 		return readRulesFromStream( is );
 	}
 
-	public static String getCharacterDataFromElement( Element e ) {
+	private static String getCharacterDataFromElement( Element e ) {
 		Node child = e.getFirstChild();
 		if (child instanceof CharacterData) {
 			CharacterData cd = (CharacterData) child;

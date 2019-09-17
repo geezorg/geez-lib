@@ -40,6 +40,14 @@ public class DocxProcessor extends DocumentProcessor {
 			fontToConverterMap.put(font, converter);
 		}
 	}
+	
+	private ConvertFontSystem stashedConverter = null;
+	public void stashConverter(ConvertFontSystem converter) {
+		stashedConverter = converter;
+	}
+	public ConvertFontSystem getStashedConverter() {
+		return stashedConverter;
+	}
     
 	private void processText(Text text, String fontIn) {
 		ConvertFontSystem converter = fontToConverterMap.get( fontIn );
