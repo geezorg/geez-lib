@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.geez.convert.Converter;
 import org.xml.sax.SAXException;
 
+import com.ibm.icu.lang.UCharacter;
+import com.ibm.icu.text.BreakIterator;
 import com.ibm.icu.text.Transliterator;
 
 
@@ -94,8 +96,8 @@ public class ConvertTextString extends Converter {
 		if( textIn == null )
 			return null;
 		
-		textOut = xlit.transliterate( textIn );
-		return textOut;
+		return remapCase( xlit.transliterate( textIn ) );
+
 	}
 	public String convertText( String text ) {
 		setText( text );
