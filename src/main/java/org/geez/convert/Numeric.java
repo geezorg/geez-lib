@@ -1,5 +1,16 @@
 package org.geez.convert;
 
+
+/**
+* <code>Numeric</code> is a class to be used for defining special case converters
+* most commonly for legacy Ethiopic font encodings systems (which may be diacritical based or
+* multi-part systems).  The class provides methods for reading ICU transliterations defined in
+* either LDML or plain text files.
+* 
+* @author  Daniel Yacob
+* @version 0.1.0
+* @since   2019-09-17 
+*/
 public class Numeric {
 
 	private static final char ETHIOPIC_ONE          = 0x1369;

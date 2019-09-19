@@ -21,6 +21,8 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.ibm.icu.lang.UCharacter;
+import com.ibm.icu.text.BreakIterator;
 import com.ibm.icu.text.Transliterator;
 
 /**
@@ -194,6 +196,37 @@ public abstract class Converter {
 	
 	public boolean isSpacePreservableSymbol(String space) {
 		return false;
+	}
+	
+	
+	protected String caseOption = null;
+	public void setCaseOption(String caseOption ) {
+		// there should be an enumeration for case options
+		this.caseOption = caseOption;
+	}
+	
+	public String remapCase(String textIn) {
+		
+		String textOut = null;
+		switch( (caseOption==null) ? "" : caseOption ) {
+			case "lowercase": 
+				textOut = UCharacter.toLowerCase( textOut );
+				break;
+				
+			case "uppercase": 
+				textOut = UCharacter.toUpperCase( textOut );
+				break;
+				
+			case "titlecase": 
+				textOut = UCharacter.toTitleCase( textOut, BreakIterator.getTitleInstance() );
+				break;
+				
+			default:
+				textOut = textIn;
+				break;
+			
+		}
+		return textOut;
 	}
 
 }

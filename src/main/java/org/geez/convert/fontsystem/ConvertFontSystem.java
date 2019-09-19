@@ -79,13 +79,13 @@ public class ConvertFontSystem extends Converter {
 		if ( xlit == null ) {
 			return null;
 		}
-		// localCheck( text ); no systems are using this anymore
-		return xlit.transliterate( text );
+		
+		return remapCase( xlit.transliterate( text ) );
 	}
 	
 	public String convertText( String text ) {
 		// this would only work for mono-font systems
-		return xlit.transliterate( text );
+		return remapCase( xlit.transliterate( text ) );
 	}
 	
 	public Set<String> getSupportedFonts() {
