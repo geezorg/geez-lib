@@ -210,15 +210,15 @@ public abstract class Converter {
 		String textOut = null;
 		switch( (caseOption==null) ? "" : caseOption ) {
 			case "lowercase": 
-				textOut = UCharacter.toLowerCase( textOut );
+				textOut = UCharacter.toLowerCase( textIn );
 				break;
 				
 			case "uppercase": 
-				textOut = UCharacter.toUpperCase( textOut );
+				textOut = UCharacter.toUpperCase( textIn );
 				break;
 				
 			case "titlecase": 
-				textOut = UCharacter.toTitleCase( textOut, BreakIterator.getTitleInstance() );
+				textOut = UCharacter.toTitleCase( textIn, BreakIterator.getTitleInstance() );
 				break;
 				
 			default:
