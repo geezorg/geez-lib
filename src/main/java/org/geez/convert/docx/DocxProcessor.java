@@ -19,6 +19,8 @@ import org.docx4j.openpackaging.parts.WordprocessingML.FooterPart;
 import org.docx4j.openpackaging.parts.WordprocessingML.FootnotesPart;
 import org.docx4j.openpackaging.parts.WordprocessingML.HeaderPart;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.docx4j.wml.Br;
+import org.docx4j.wml.P;
 import org.docx4j.wml.R;
 import org.docx4j.wml.Text;
 import org.geez.convert.DocumentProcessor;
@@ -33,6 +35,7 @@ public class DocxProcessor extends DocumentProcessor {
 	protected List<String> targetTypefaces = new  ArrayList<String>();
 	protected Map<String,ConvertFontSystem> fontToConverterMap = new HashMap<String,ConvertFontSystem>();
 	protected String fontOut = null;
+	protected String appendStyle = "Off";
 	
 	public void addConverter(ConvertFontSystem converter) {
 		targetTypefaces.addAll( converter.getTargetTypefaces() );
@@ -49,6 +52,10 @@ public class DocxProcessor extends DocumentProcessor {
 		return stashedConverter;
 	}
     
+	public void setAppendOutput( String appendStyle ) {
+		this.appendStyle = appendStyle;
+	}
+	
 	private void processText(Text text, String fontIn) {
 		ConvertFontSystem converter = fontToConverterMap.get( fontIn );
 		if( converter.isSpacePreservableSymbol( text.getValue() ) ) {
@@ -296,23 +303,69 @@ public class DocxProcessor extends DocumentProcessor {
 				}
 			}
 		}
+		
+		// used only by Xliterator
+		if(! "Off".equals( appendStyle ) ) {
+			Map<R,R> runMap = new HashMap<R,R>();
+			// int size = unstyledTextOrdered.size();
+			P lastP = null;
+			Text lastT = null;
+			for ( int i=0; i<size; i++ ) {
+				Text t = unstyledTextOrdered.get(i);
+	    		R r = (R)t.getParent();
+	    		P p = (P)r.getParent();
+	    		R newR = null;
+
+	    		if( runMap.containsKey(r) ) {
+	    			newR = runMap.get(r);
+	    		}
+	    		else {
+	    			newR = new R();
+
+		    		if( p != lastP ) {
+		    			if( appendStyle.contains( "On a New Line" ) ) {
+		    				Br lineBreak = new Br();
+		    				p.getContent().add(lineBreak);
+		    			}
+		    			else {
+		    				Text spaceT = new Text();
+		    				spaceT.setSpace( "preserve" );
+		    				spaceT.setValue( " " );
+		    				spaceT.setParent( newR );
+		    				newR.getContent().add( spaceT );
+		    			}
+		    		}
+		    		p.getContent().add(newR);
+					newR.setParent( p );
+	    		}
+	    		
+	
+				Text newT = new Text();
+				newT.setParent( newR );
+    			if( appendStyle.contains( "and with ()" ) ) {
+		    		if( p != lastP ) {
+		    			if( lastT != null ) {
+		    				lastT.setValue( lastT.getValue() + ")" );
+		    			}
+		    			newT.setValue( "(" + t.getValue() );
+		    		}
+    			}
+    			else {
+    				newT.setValue( t.getValue() );
+    			}
+				newT.setSpace( t.getSpace() );
+				newR.getContent().add( newT );
+				String fontIn = unstyledText.get(t);
+				unstyledText.put(newT, fontIn);
+				unstyledText.remove(t);
+				unstyledTextOrdered.set(i, newT);
+				lastT = newT;
+				lastP = p;
+	    	}
+		}
 	}
 	
 
-	/*
-	 * 
-	public void normalizeText( final JaxbXmlPart<?> part, DocxStyledTextFinder stFinder, DocxUnstyledTextFinder ustFinder ) throws Docx4JException {
-		if( stFinder.hasStyles() ) {
-			stFinder.clearResults();
-		
-			new TraversalUtil( part.getContents(), stFinder );
-
-		}
-		
-		ustFinder.clearResults();
-		new TraversalUtil( part.getContents(), ustFinder );
-	}
-	*/
 
 	public void process( final File inputFile, final File outputFile )
 	{
@@ -327,6 +380,7 @@ public class DocxProcessor extends DocumentProcessor {
        		Map<String,Map<String,String>> styleIdToFont = DocxUtils.readStyles(wordMLPackage, targetTypefaces, fontOut);
        		DocxStyledTextFinder    stf = new DocxStyledTextFinder( styleIdToFont );
     		DocxUnstyledTextFinder ustf = new DocxUnstyledTextFinder(targetTypefaces, fontOut);
+
     		
     		// see: https://stackoverflow.com/questions/34357005/javafx-task-update-progress-from-a-method
     		// selectFonts( documentPart );
