@@ -170,6 +170,77 @@ public class DocxProcessor extends DocumentProcessor {
 			}
 	}
 	
+	private void appendOutput( Map<Text,String> textMap, List<Text> textList ) {
+		
+		int size = textList.size();
+		if(! "Off".equals( appendStyle ) ) {
+			Map<R,R> runMap = new HashMap<R,R>();
+			// int size = unstyledTextOrdered.size();
+			P lastP = null;
+			
+			for ( int i=0; i<size; i++ ) {
+				Text t = textList.get(i);
+	    		R r = (R)t.getParent();
+	    		P p = (P)r.getParent();
+	    		R newR = null;
+
+	    		if( runMap.containsKey(r) ) {
+	    			newR = runMap.get(r);
+	    		}
+	    		else {
+	    			newR = new R();
+
+		    		if( p != lastP ) {
+		    			if( appendStyle.contains( "On a New Line" ) ) {
+		    				Br lineBreak = new Br();
+		    				p.getContent().add(lineBreak);
+		    			}
+		    			else {
+		    				Text spaceT = new Text();
+		    				spaceT.setSpace( "preserve" );
+		    				spaceT.setValue( " " );
+		    				spaceT.setParent( newR );
+		    				newR.getContent().add( spaceT );
+		    			}
+		    		}
+		    		p.getContent().add(newR);
+					newR.setParent( p );
+	    		}
+	    		
+	
+				Text newT = new Text();
+				newT.setParent( newR );
+    			if( appendStyle.contains( "and with ()" ) ) {
+		    		if( (p != lastP) ) {
+		    			if( i > 0 ) {
+		    				String text = textList.get(i-1).getValue() ;
+		    				textList.get(i-1).setValue( text + ")" );
+		    				// lastT.setValue( lastT.getValue() + ")" );
+		    			}
+		    			newT.setValue( "(" + t.getValue() );
+		    		}
+		    		else if( i == (size-1) ) {
+		    			newT.setValue( t.getValue() + ")" );	
+		    		}
+	    			else {
+	    				newT.setValue( t.getValue() );
+	    			}
+    			}
+    			else {
+    				newT.setValue( t.getValue() );
+    			}
+				newT.setSpace( t.getSpace() );
+				newR.getContent().add( newT );
+				String fontIn = textMap.get(t);
+				textMap.put(newT, fontIn);
+				textMap.remove(t);
+				textList.set(i, newT);
+				// lastT = newT;
+				lastP = p;
+	    	}
+		}
+	}
+	
 	/*
 	 * Previously this normalizeText was done by the diacrtical based converter, this works fine so long as
 	 * a document is in a single font system. Since multi-font system documents have been found (diacritical mixed
@@ -259,11 +330,16 @@ public class DocxProcessor extends DocumentProcessor {
 								}
 							}
 						}
+					}
 				}
-				}
+			}
+			
+			if(! "Off".equals( appendStyle ) ) {
+				appendOutput( styledText, styledTextOrdered );
 			}
 		}
 		
+
 		ustFinder.clearResults();
 		new TraversalUtil( part.getContents(), ustFinder );
 		
@@ -306,10 +382,12 @@ public class DocxProcessor extends DocumentProcessor {
 		
 		// used only by Xliterator
 		if(! "Off".equals( appendStyle ) ) {
+			appendOutput( unstyledText, unstyledTextOrdered );
+			/*
 			Map<R,R> runMap = new HashMap<R,R>();
 			// int size = unstyledTextOrdered.size();
 			P lastP = null;
-			Text lastT = null;
+			
 			for ( int i=0; i<size; i++ ) {
 				Text t = unstyledTextOrdered.get(i);
 	    		R r = (R)t.getParent();
@@ -343,12 +421,20 @@ public class DocxProcessor extends DocumentProcessor {
 				Text newT = new Text();
 				newT.setParent( newR );
     			if( appendStyle.contains( "and with ()" ) ) {
-		    		if( p != lastP ) {
-		    			if( lastT != null ) {
-		    				lastT.setValue( lastT.getValue() + ")" );
+		    		if( (p != lastP) ) {
+		    			if( i > 0 ) {
+		    				String text = unstyledTextOrdered.get(i-1).getValue() ;
+		    				unstyledTextOrdered.get(i-1).setValue( text + ")" );
+		    				// lastT.setValue( lastT.getValue() + ")" );
 		    			}
 		    			newT.setValue( "(" + t.getValue() );
 		    		}
+		    		else if( i == (size-1) ) {
+		    			newT.setValue( t.getValue() + ")" );	
+		    		}
+	    			else {
+	    				newT.setValue( t.getValue() );
+	    			}
     			}
     			else {
     				newT.setValue( t.getValue() );
@@ -359,9 +445,10 @@ public class DocxProcessor extends DocumentProcessor {
 				unstyledText.put(newT, fontIn);
 				unstyledText.remove(t);
 				unstyledTextOrdered.set(i, newT);
-				lastT = newT;
+				// lastT = newT;
 				lastP = p;
 	    	}
+	    	*/
 		}
 	}
 	
