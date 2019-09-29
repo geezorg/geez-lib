@@ -217,7 +217,7 @@ public abstract class Converter {
 				textOut = UCharacter.toUpperCase( textIn );
 				break;
 				
-			case "titlecase": 
+			case "title case": 
 				textOut = UCharacter.toTitleCase( textIn, BreakIterator.getTitleInstance() );
 				break;
 				
