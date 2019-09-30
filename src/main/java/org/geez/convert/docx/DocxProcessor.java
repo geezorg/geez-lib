@@ -334,6 +334,7 @@ public class DocxProcessor extends DocumentProcessor {
 				}
 			}
 			
+			// used only by Xliterator
 			if(! "Off".equals( appendStyle ) ) {
 				appendOutput( styledText, styledTextOrdered );
 			}
