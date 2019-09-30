@@ -45,9 +45,12 @@ public class ConvertTextString extends Converter {
 		xlit = Transliterator.createFromRules( "Xliterator-" + UUID.randomUUID(), rulesText, icuDirection );
 	}
     
+    
     public ConvertTextString() {
     	
     }
+    
+    
     public void setRules( String rulesText, String direction ) throws SAXException, IOException {
     	String tableRulesText = rulesText;
 		if( rulesText.startsWith( "<?xml" ) ) {
@@ -57,7 +60,8 @@ public class ConvertTextString extends Converter {
 				 ? Transliterator.FORWARD 
 				 : Transliterator.REVERSE // || direction.equals("reverse") 
 				 ;
-		xlit = Transliterator.createFromRules( "GeezLib-" + UUID.randomUUID(), tableRulesText, icuDirection );	
+
+		xlit = Transliterator.createFromRules( "GeezLib-" + UUID.randomUUID(), tableRulesText, icuDirection );
     }
 
     
@@ -69,6 +73,7 @@ public class ConvertTextString extends Converter {
 
 		initialize( tableRulesFileName, icuDirection );
 	}
+	
 	    
 	void initialize( final String tableRulesFile, final int icuDirection ) throws Exception {
 			String id = tableRulesFile; // remove the file extension
@@ -83,9 +88,11 @@ public class ConvertTextString extends Converter {
     	this.textIn = textIn;
     }
     
+    
     public String getText() {
     	return textIn;
     }
+    
       
     public String getTextOut() {
     	return textOut;
@@ -99,6 +106,8 @@ public class ConvertTextString extends Converter {
 		return remapCase( xlit.transliterate( textIn ) );
 
 	}
+	
+	
 	public String convertText( String text ) {
 		setText( text );
 		return convert();
