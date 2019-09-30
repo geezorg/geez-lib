@@ -6,8 +6,6 @@ import java.util.UUID;
 import org.geez.convert.Converter;
 import org.xml.sax.SAXException;
 
-import com.ibm.icu.lang.UCharacter;
-import com.ibm.icu.text.BreakIterator;
 import com.ibm.icu.text.Transliterator;
 
 
