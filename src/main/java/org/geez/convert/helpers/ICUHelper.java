@@ -115,11 +115,14 @@ public class ICUHelper {
      * @throws SAXException if the XML document is invalid
      * @since 0.1.0
      */
-	public String readRulesResourceFileXML( String rulesFileXML ) throws IOException, SAXException {		
+	public String readRulesResourceFileXML( String rulesFileXML ) throws IOException, SAXException {
+		return readRulesResourceFileXML( "common/transforms/", rulesFileXML );
+	}
+	public String readRulesResourceFileXML( String resourcePath, String rulesFileXML ) throws IOException, SAXException {		
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		if(! rulesFileXML.contains( "/" ) ) {
 			// this is a week test for a path hierarchy, we assume some path for a user defined file
-			rulesFileXML = "common/transforms/" + rulesFileXML ; 
+			rulesFileXML = resourcePath + rulesFileXML ; 
 		}
 		InputStream xmlStream = classLoader.getResourceAsStream( rulesFileXML );    
 	    
