@@ -185,7 +185,7 @@ public class ICUHelper {
     }
     
 	
-	public void registerTransliteration( String alias, String direction, String rulesFilePath ) throws IOException, SAXException  {
+	public void registerTransliterationFile( String alias, String direction, String rulesFilePath ) throws IOException, SAXException  {
   		int icuDirection = (direction.equals("both") || direction.equals("forward"))
  				 ? Transliterator.FORWARD 
  				 : Transliterator.REVERSE // || direction.equals("reverse") 
@@ -201,9 +201,29 @@ public class ICUHelper {
     		rulesText = readRulesResourceFile( rulesFilePath );
     	}
     	
-    	
   		Transliterator trans = Transliterator.createFromRules( alias, rulesText, icuDirection );
   		Transliterator.registerInstance( trans );
+	}
+	
+    
+	
+	public void registerTransliteration( String alias, String direction, String rulesText ) throws IOException, SAXException  {
+  		int icuDirection = (direction.equals("both") || direction.equals("forward"))
+ 				 ? Transliterator.FORWARD 
+ 				 : Transliterator.REVERSE // || direction.equals("reverse") 
+ 				 ;
+    	
+		if( rulesText.trim().startsWith( "<?xml" ) ) {
+			rulesText = readRulesStringXML( rulesText );
+		}
+		
+  		Transliterator trans = Transliterator.createFromRules( alias, rulesText, icuDirection );
+  		Transliterator.registerInstance( trans );
+	}
+	
+	
+	public void unregisterTransliteration( String alias ) {
+		Transliterator.unregister( alias );
 	}
 	
 }
