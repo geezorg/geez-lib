@@ -60,6 +60,10 @@ public class ICUHelper {
 			if ( line.trim().equals("") || line.charAt(0) == '#' ) {
 				continue;
 			}
+			if( line.charAt(line.length()-1) == '\\' ) {
+				line = line.substring(0, (line.length()-1) ) ;
+			}
+
 			segment = line.replaceFirst ( "^(.*?)#(.*)$", "$1" );
 			rules += ( segment == null ) ? line : segment;
 		}
@@ -179,25 +183,24 @@ public class ICUHelper {
     
 	
 	public void registerTransliteration( String alias, String direction, String rulesFilePath ) throws IOException, SAXException  {
+  		int icuDirection = (direction.equals("both") || direction.equals("forward"))
+ 				 ? Transliterator.FORWARD 
+ 				 : Transliterator.REVERSE // || direction.equals("reverse") 
+ 				 ;
+  		
+  		String rulesText = null;
+    	File rulesFile = new File( rulesFilePath );
 
-	  		int icuDirection = (direction.equals("both") || direction.equals("forward"))
-	 				 ? Transliterator.FORWARD 
-	 				 : Transliterator.REVERSE // || direction.equals("reverse") 
-	 				 ;
-	  		
-	  		String rulesText = null;
-	    	File rulesFile = new File( rulesFilePath );
-
-	    	if( rulesFile.exists() ) {
-	    		rulesText = readLineByLineJava8( rulesFilePath );
-	    	}
-	    	else {
-	    		rulesText = readRulesResourceFile( rulesFilePath );
-	    	}
-	    	
-	    	
-	  		Transliterator trans = Transliterator.createFromRules( alias, rulesText, icuDirection );
-	  		Transliterator.registerInstance( trans );
+    	if( rulesFile.exists() ) {
+    		rulesText = readLineByLineJava8( rulesFilePath );
+    	}
+    	else {
+    		rulesText = readRulesResourceFile( rulesFilePath );
+    	}
+    	
+    	
+  		Transliterator trans = Transliterator.createFromRules( alias, rulesText, icuDirection );
+  		Transliterator.registerInstance( trans );
 	}
 	
 }
