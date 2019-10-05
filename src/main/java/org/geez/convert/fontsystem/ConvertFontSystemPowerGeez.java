@@ -27,7 +27,7 @@ public class ConvertFontSystemPowerGeez extends  ConvertFontSystemDiacriticalSys
 	}
 	
 	private void init() {
-		this.initialize( "monodirectional/PowerGeez.txt", "bidirectional/PowerGeezNumbers.txt", "Ge'ez-1", "Ge'ez-1 Numbers" );
+		this.initialize( "bidirectional/PowerGeez.txt", "bidirectional/PowerGeezNumbers.txt", "Ge'ez-1", "Ge'ez-1 Numbers" );
 		
 		huletNeteb = ':';
 		
