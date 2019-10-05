@@ -69,7 +69,7 @@ public abstract class Converter extends ICUHelper {
 				break;
 				
 			case "title case": 
-				textOut = UCharacter.toTitleCase( textIn, BreakIterator.getTitleInstance() );
+				textOut = UCharacter.toTitleCase( textIn, BreakIterator.getWordInstance() );
 				break;
 				
 			default:
