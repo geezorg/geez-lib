@@ -196,7 +196,7 @@ $plosive = \xc2 ;
 ኮ ← \x8c ;
 ኹ ← \x8d $kaib ;
 ኺ ← \x8d $salis ;
-ኼ ← x8d $hamis ;
+ኼ ← \x8d $hamis ;
 ዀ ← \x8d $diqala_geez ;
 ዂ ← \x8d $diqala_salis ;
 ዃ ← \x8d $diqala_rabi  ;
@@ -382,7 +382,7 @@ $plosive = \xc2 ;
 #
 # Strip away any remaining diacritical marks
 # 
- ← [ $kaib $salis $hamis $diqala_geez $diqala_salis $diqala_kaib $diqala_rabi $diqala_hamis $macron $plosive $sadis_left $sadis_right $horizontal_mark ] ;
+ ← [ $kaib $salis $hamis $diqala_geez $diqala_salis $diqala_kaib $diqala_rabi $diqala_hamis $macron $plosive $sadis_left $sadis_right ] ;
 #
 #
-:: ([\x20-\u203a]) ;
+:: ([\x20-\xff]) ;

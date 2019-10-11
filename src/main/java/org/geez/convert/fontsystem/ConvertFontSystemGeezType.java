@@ -20,7 +20,7 @@ public class ConvertFontSystemGeezType extends ConvertFontSystemDiacriticalSyste
 	}
 	
 	private void init() {
-		this.initialize( "biirectional/GeezType.txt", "GeezType" );
+		this.initialize( "monodirectional/GeezType.txt", "GeezType" );
 		
 		huletNeteb = ':';
 		
@@ -37,6 +37,28 @@ public class ConvertFontSystemGeezType extends ConvertFontSystemDiacriticalSyste
 		buildRE();
 	}
 
+
+
+	public String convertText( String text, String fontIn ) {
+		xlit = fontToTransliteratorMap.get( fontIn );
+		if ( xlit == null ) {
+			return null;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i = 0; i < text.length(); i++) {
+			int x = ( 0x00ff & (int)text.charAt(i) );
+			sb.append( (char)x );
+		}
+		
+		return xlit.transliterate( sb.toString() );
+	}
+	
+	
+	public boolean isSpacePreservableSymbol(String space) {
+		return ( space.equals("\uf020") );
+	}
 	
 	/*
 	public boolean isMacron(String text) {
