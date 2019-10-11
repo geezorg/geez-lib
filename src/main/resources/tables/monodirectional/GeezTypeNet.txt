@@ -197,7 +197,7 @@ $horizontal_mark = \xc6 ;
 ኸ ← \u2030\x8d ;
 ኻ ← \u0160\x8d ;
 ኽ ← \u2039\x8d ;
-ኾ ← \u0152x8d ;
+ኾ ← \u0152\x8d ;
 ኩ ← \u2030 $kaib ;
 ኪ ← \u2030 $salis ;
 ኬ ← \u2030 $hamis ;
