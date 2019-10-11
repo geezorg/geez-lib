@@ -16,6 +16,7 @@ import org.geez.convert.fontsystem.ConvertFontSystemFeedelGeezII;
 import org.geez.convert.fontsystem.ConvertFontSystemFeedelGeezNewAB;
 import org.geez.convert.fontsystem.ConvertFontSystemFeedelGeezigna;
 import org.geez.convert.fontsystem.ConvertFontSystemGeezFont;
+import org.geez.convert.fontsystem.ConvertFontSystemGeezType;
 import org.geez.convert.fontsystem.ConvertFontSystemGeezTypeNet;
 import org.geez.convert.fontsystem.ConvertFontSystemNCIC;
 import org.geez.convert.fontsystem.ConvertFontSystemPowerGeez;
@@ -52,6 +53,10 @@ public class DocxProcessorAutodetect extends DocxProcessor {
 			}
 			for(String font: ConvertFontSystemGeezFont.supportedFonts) {
 				fontToConverterClassMap.put( font, ConvertFontSystemGeezFont.class );
+				targetTypefaces.add( font );
+			}
+			for(String font: ConvertFontSystemGeezType.supportedFonts) {
+				fontToConverterClassMap.put( font, ConvertFontSystemGeezType.class );
 				targetTypefaces.add( font );
 			}
 			for(String font: ConvertFontSystemGeezTypeNet.supportedFonts) {
