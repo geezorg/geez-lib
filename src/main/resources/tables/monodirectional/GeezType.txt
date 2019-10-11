@@ -18,12 +18,45 @@ $salis = [ \xef \xf0 \xf1 ] ;
 $hamis = [ \xed \xf2 \xf3 \xf4 \xf5 ] ;
 $diqala_geez  = [ \xf7 \xf8 ];
 $diqala_salis = \xf9 ;
-$diqala_kaib  = [ \xe8 \xff ];
+$diqala_kaib  = [ \xe8 \xff ] ;
 $diqala_rabi  = [ \xfa \xfb \xfc ] ;
 $diqala_hamis = [ \xfd \xfe ] ;
 $sadis_right = \xf6 ;
 $sadis_left = \x6d ;
-$macron  = [ \x68 \x7a \x8d ] ;
+$macron  = \x7a ;
+$plosive = \xc2 ;
+#
+#
+x7a
+xc2
+xe8 ;
+xe9 ;
+xea ;
+xec ;
+xed ;
+xef ;
+xf0 ;
+xf1 ;
+xf3 ;
+xf4 ;
+xf6 ;
+xf7 ;
+xf9 ;
+xfa ;
+xfb ;
+xfc ;
+xfd ;
+$kaib  = [ \xe9 \xea \xeb \xec ] ;
+$salis = [ \xef \xf0 \xf1 ] ;
+$hamis = [ \xed \xf2 \xf3 \xf4 \xf5 ] ;
+$diqala_geez  = [ \xf7 \xf8 ];
+$diqala_salis = \xf9 ;
+$diqala_kaib  = \xe8 ;
+$diqala_rabi  = [ \xfa \xfb \xfc ] ;
+$diqala_hamis = [ \xfd \xfe ] ;
+$sadis_right = \xf6 ;
+$sadis_left = \x6d ;
+$macron  = [ \x68 \x7a ] ;
 $plosive = \xc2 ;
 $horizontal_mark = \xc6 ;
 #
