@@ -11,12 +11,14 @@ public class ConvertFontSystemDiacriticalSystem extends ConvertFontSystemDuoFont
 	protected final List<String> font1Typefaces = new ArrayList<String>();
 
 	protected final ArrayList<String> diacritics = new ArrayList<String>();
+	protected final ArrayList<String> leftDiacritics = new ArrayList<String>();
 	protected Pattern diacriticsRE = null;
 	
 	
 	public ConvertFontSystemDiacriticalSystem() {
 		super();
 	}
+	
 	
 	protected void buildRE() {
 		
@@ -32,19 +34,33 @@ public class ConvertFontSystemDiacriticalSystem extends ConvertFontSystemDuoFont
 	}
 
 	
-	public boolean isDiacritic(String fontName, String text) {
-		if ( text.equals( "" ) ) {
+	// reconsider the need for the first argument:
+	public boolean isDiacritic(String fontName, char diacritic) {
+		/*
+		 * this shouldn't happen
+		 * 
+		if ( diacritic == '\0' ) {
 			return false;
 		}
-		return diacritics.contains( text.substring( text.length()-1 ) );
+		*/
+		return diacritics.contains( String.valueOf( diacritic ) );
+	}
+	
+
+	
+	public boolean isLeftDiacritic(String fontName, char diacritic ) {
+		return leftDiacritics.contains( String.valueOf( diacritic ) );
 	}
 	
 	
+	/* this method appears to no longer be in use
+
 	public boolean isContinuant(String fontName, String text) {
 		
 		return ( isDiacritic(fontName, text) || (text.charAt(0) == huletNeteb) );
 		
 	}
+	*/
 
 	
 	/*

@@ -32,13 +32,26 @@ public class ConvertFontSystemGeezType extends ConvertFontSystemDiacriticalSyste
 			)
 		);
 		
+		leftDiacritics.add( "\uf06d" );  // left side diacritic for ብ
+		
 		translit2 = null;
 		
 		buildRE();
 	}
 
-
-
+	/* The left side mark for ብ appears to get split across runs, like:
+	 * 
+	 * 
+	<w:r>
+  		<w:rPr><w:rFonts w:ascii="GeezType" w:hAnsi="GeezType"/></w:rPr>
+  		<w:t></w:t>
+	</w:r>
+	<w:r>
+  		<w:rPr><w:rFonts w:ascii="GeezType" w:hAnsi="GeezType"/></w:rPr>
+  		<w:t></w:t>
+	</w:r>
+	 */
+	
 	public String convertText( String text, String fontIn ) {
 		xlit = fontToTransliteratorMap.get( fontIn );
 		if ( xlit == null ) {

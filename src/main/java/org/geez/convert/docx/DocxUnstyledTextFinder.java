@@ -25,6 +25,7 @@ public class DocxUnstyledTextFinder extends CallbackImpl {
     private String fontOut = null;
     List<String> targetTypefaces= null;
     
+    
     public DocxUnstyledTextFinder( List<String> targetTypefaces, String fontOut ) {
     	super();
     	this.targetTypefaces = targetTypefaces;

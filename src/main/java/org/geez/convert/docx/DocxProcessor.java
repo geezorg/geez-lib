@@ -301,16 +301,26 @@ public class DocxProcessor extends DocumentProcessor {
 			Map<Text,String> styledText = stFinder.results;
 			List<Text> styledTextOrdered = stFinder.resultsOrdered;
 			int size = styledTextOrdered.size();
-			for ( int i=1; i<size; i++ ) {
+			
+			/* This iteration has become a little awkward/inconsistent in that it performs both a look-behind for
+			 * regular right-side diacritic checks and hulet-neteb combinations, as well as a look ahead for 
+			 * left-side diacritic checks.  The iteration had originally been look-behind only and the counter
+			 * started at 1.  An assumption when starting at zero is that a diacritic symbol or combining-with-hulet-neteb
+			 * symbol would not be first character of a node list.  This may prove not to be the case, so if an 
+			 * index out of bound exception occurs at some point we'll need to rework this and the following
+			 * iteration.
+			 */
+			for ( int i=0; i<size; i++ ) {
 				Text text1 = styledTextOrdered.get(i);
 				String value1 = text1.getValue();
 				if( value1.length() > 0 ) {
 					char firstChar = value1.charAt(0);
+					char lastChar = value1.charAt( value1.length()-1 );
 					String fontIn = styledText.get( text1 );
 					ConvertFontSystem converter = fontToConverterMap.get( fontIn );
 					if( converter instanceof ConvertFontSystemDiacriticalSystem ) {
 						ConvertFontSystemDiacriticalSystem diaConverter = (ConvertFontSystemDiacriticalSystem)converter;
-						if( diaConverter.isDiacritic( fontIn, String.valueOf(firstChar) ) )  {
+						if( diaConverter.isDiacritic( fontIn, firstChar ) )  {
 							Text text0 = styledTextOrdered.get( i-1 );
 							// check here if text0 is under the same font
 							if( fontIn.equals( styledText.get( text0 ) ) ) {
@@ -331,6 +341,16 @@ public class DocxProcessor extends DocumentProcessor {
 								}
 							}
 						}
+						else if( diaConverter.isLeftDiacritic( fontIn, lastChar ) ) {
+							Text text2 = styledTextOrdered.get( i+1 ); // look ahead
+							// check here if text2 is under the same font
+							if( fontIn.equals( styledText.get( text2 ) ) ) {
+								String value2 = text2.getValue();
+							
+								text2.setValue( lastChar + value2 );   // append to previous node as last char
+								text1.setValue( value1.substring(0, (value1.length()-1)) );  // remove from current node
+							}
+						}
 					}
 				}
 			}
@@ -348,16 +368,17 @@ public class DocxProcessor extends DocumentProcessor {
 		Map<Text,String> unstyledText = ustFinder.results;
 		List<Text> unstyledTextOrdered = ustFinder.resultsOrdered;
 		int size = unstyledTextOrdered.size();
-		for ( int i=1; i<size; i++ ) {
+		for ( int i=0; i<size; i++ ) {
 			Text text1 = unstyledTextOrdered.get(i);
 			String value1 = text1.getValue();
 			if( value1.length() > 0 ) {
 				char firstChar = value1.charAt(0);
+				char lastChar = value1.charAt( value1.length()-1 );
 				String fontIn = unstyledText.get( text1 );
 				ConvertFontSystem converter = fontToConverterMap.get( fontIn );
 				if( converter instanceof ConvertFontSystemDiacriticalSystem ) {
 					ConvertFontSystemDiacriticalSystem diaConverter = (ConvertFontSystemDiacriticalSystem)converter;
-					if( diaConverter.isDiacritic( fontIn, String.valueOf(firstChar) ) )  {
+					if( diaConverter.isDiacritic( fontIn, firstChar ) )  {
 						Text text0 = unstyledTextOrdered.get( i-1 );
 						// check here if text0 is under the same font
 						if( fontIn.equals( unstyledText.get( text0 ) ) ) {
@@ -376,6 +397,16 @@ public class DocxProcessor extends DocumentProcessor {
 								text0.setValue( value0 + firstChar );   // append to previous node as last char
 								text1.setValue( value1.substring(1) );  // remove from current node	
 							}
+						}
+					}
+					else if( diaConverter.isLeftDiacritic( fontIn, lastChar ) ) {
+						Text text2 = unstyledTextOrdered.get( i+1 ); // look ahead
+						// check here if text2 is under the same font
+						if( fontIn.equals( unstyledText.get( text2 ) ) ) {
+							String value2 = text2.getValue();
+						
+							text2.setValue( lastChar + value2 );   // append to previous node as last char
+							text1.setValue( value1.substring(0, (value1.length()-1)) );  // remove from current node
 						}
 					}
 				}
