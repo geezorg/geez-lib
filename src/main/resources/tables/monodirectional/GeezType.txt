@@ -122,7 +122,7 @@ $plosive = \xc2 ;
 ቯ ← l $macron $diqala_rabi ;
 ቫ ← l $macron ;
 ቮ ← n $macron ;
-ብ ← $sadis_left k  ;
+ብ ← $sadis_left k ;
 ቡ ← k $kaib ;
 ቢ ← k $salis ;
 ቤ ← k $hamis ;
