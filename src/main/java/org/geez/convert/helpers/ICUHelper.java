@@ -136,7 +136,7 @@ public class ICUHelper {
 	    Element  element = (Element) nodes.item(0); // assume only one
 	    
 	    String rulesString = getCharacterDataFromElement( element );
-	    InputStream is = new ByteArrayInputStream( rulesString.getBytes() );
+	    InputStream is = new ByteArrayInputStream( rulesString.getBytes( StandardCharsets.UTF_8 ) );
 	    
 		return readRulesFromStream( is );
 	}
@@ -152,7 +152,7 @@ public class ICUHelper {
      * @since 0.1.0
      */	
 	public String readRulesStringXML( String rulesStringXML ) throws IOException, SAXException {		
-		InputStream rulesStream = new ByteArrayInputStream(rulesStringXML.getBytes());
+		InputStream rulesStream = new ByteArrayInputStream( rulesStringXML.getBytes( StandardCharsets.UTF_8 ) );
 		
 		InputSource xmlSource = new InputSource( new InputStreamReader( rulesStream, StandardCharsets.UTF_8) );
 	    
@@ -161,7 +161,7 @@ public class ICUHelper {
 	    Element  element = (Element) nodes.item(0); // assume only one
 	    
 	    String rulesString = getCharacterDataFromElement( element );
-	    InputStream is = new ByteArrayInputStream( rulesString.getBytes() );
+	    InputStream is = new ByteArrayInputStream( rulesString.getBytes( StandardCharsets.UTF_8 ) );
 	    
 		return readRulesFromStream( is );
 	}
