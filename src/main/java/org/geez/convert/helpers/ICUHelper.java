@@ -125,8 +125,9 @@ public class ICUHelper {
 			rulesFileXML = resourcePath + rulesFileXML ; 
 		}
 		InputStream xmlStream = classLoader.getResourceAsStream( rulesFileXML );
-        Reader reader = new InputStreamReader(xmlStream,"UTF-8");
-        InputSource xmlSource = new InputSource(reader);
+        // Reader reader = new InputStreamReader(xmlStream,"UTF-8");
+		BufferedReader rulesFile = new BufferedReader( new InputStreamReader(xmlStream, StandardCharsets.UTF_8) );
+        InputSource xmlSource = new InputSource(rulesFile);
         xmlSource.setEncoding("UTF-8");
 		
 	    
@@ -152,8 +153,10 @@ public class ICUHelper {
      */	
 	public String readRulesStringXML( String rulesStringXML ) throws IOException, SAXException {		
 		InputStream rulesStream = new ByteArrayInputStream(rulesStringXML.getBytes());
+		
+		InputSource xmlSource = new InputSource( new InputStreamReader( rulesStream, StandardCharsets.UTF_8) );
 	    
-	    Document doc = builder.parse( rulesStream );
+	    Document doc = builder.parse( xmlSource );
 	    NodeList nodes = doc.getElementsByTagName( "tRule" );
 	    Element  element = (Element) nodes.item(0); // assume only one
 	    
