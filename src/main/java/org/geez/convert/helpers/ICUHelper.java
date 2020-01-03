@@ -168,12 +168,30 @@ public class ICUHelper {
 
 
 	private static String getCharacterDataFromElement( Element e ) {
+		String rules = "";
+		NodeList nodeList = e.getChildNodes();
+		int size = nodeList.getLength();
+		for( int i = 0; i < size; i++ ) {
+			Node child = nodeList.item( i );
+			if (child instanceof CharacterData) {
+				CharacterData cd = (CharacterData) child;
+				rules += cd.getData();
+			}
+			else {
+				rules += child.getTextContent();
+			}
+			
+		}
+		
+		return rules;
+		/*
 		Node child = e.getFirstChild();
 		if (child instanceof CharacterData) {
 			CharacterData cd = (CharacterData) child;
 			return cd.getData();
 		}
 		return "";
+		*/
 	}
 	
 	
