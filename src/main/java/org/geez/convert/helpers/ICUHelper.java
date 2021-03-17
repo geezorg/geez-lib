@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+// import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -73,7 +73,7 @@ public class ICUHelper {
 	
     /**
      * Returns a single line string of ICU transliteration rules that may be passed to the
-     * ICU <tt>Transliterator.createFromRules</tt> API.
+     * ICU <code>Transliterator.createFromRules</code> API.
      * 
      * @param rulesFileName the file name (or path) for the file containing ICU transliteration rules.
      * @return a single line String containing the file content
@@ -92,7 +92,7 @@ public class ICUHelper {
 	
     /**
      * Given a text input file, returns a single line string of ICU transliteration rules that may
-     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * be passed to the ICU <code>Transliterator.createFromRules</code> API.
      * 
      * @param rulesFileTXT the name (or path) of a text file containing ICU transliteration rules.
      * @return a single line String containing the file content
@@ -107,7 +107,7 @@ public class ICUHelper {
 		
     /**
      * Given an LDML input file, returns a single line string of ICU transliteration rules that may
-     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * be passed to the ICU <code>Transliterator.createFromRules</code> API.
      * 
      * @param rulesFileXML the name (or path) of an XML file containing ICU transliteration rules.
      * @return a single line String containing the file content
@@ -143,7 +143,7 @@ public class ICUHelper {
 	
     /**
      * Given an LDML input string, returns a single line string of ICU transliteration rules that may
-     * be passed to the ICU <tt>Transliterator.createFromRules</tt> API.
+     * be passed to the ICU <code>Transliterator.createFromRules</code> API.
      * 
      * @param rulesStringXML a string representation of an LDML document containng ICU transliteration rules.
      * @return a single line String containing the file content
