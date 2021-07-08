@@ -86,6 +86,7 @@ $diqala_hamis = \x46 ;
 ሿ ← \x68 $diqala_rabi ;
 ሻ ← h ;
 ሸ ← g ;
+ቍ ← kC ;
 ቀ ← k ;
 ቁ ← l ;
 ቂ ← m ;
