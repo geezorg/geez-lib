@@ -44,3 +44,8 @@
 
 ፦ ↔ \x2d ;
 ፥ ↔ \x2e ;
+#
+#  Oddly, some random invisible symbols can be found at the end of numbers, below are those that have been encountered so far
+#  remove here and any other spurious symbols.
+#
+← [VWYwu¡`ÚÏ];

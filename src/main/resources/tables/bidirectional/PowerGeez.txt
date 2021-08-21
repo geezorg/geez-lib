@@ -28,8 +28,10 @@
 ል ↔ M ;
 ሏ ↔ \x4c\x44 ;
 ላ ↔ L ;
-ሑ ↔ \x4e\x3c ;
-ሒ ↔ \x4e\x3e ;
+ሑ ↔ O ;
+ሑ ← \x4e\x3c ;
+ሒ ↔ \x4e\x3d ;
+ሒ ← \x4e\x3e ;
 ሔ ↔ \x4e\x3f ;
 ሐ ↔ N ;
 ሕ ↔ Q ;
@@ -96,7 +98,7 @@
 ቧ ↔ \x76\x44 ;
 ባ ↔ v ;
 ቩ ↔ \x79\x3c ;
-ቪ ↔ \x79\x3e ;
+ቪ ↔ \x79\x3d ;
 ቬ ↔ \x79\x3f ;
 ቨ ↔ y ;
 ቭ ↔ \x7b ;
@@ -190,7 +192,8 @@
 ዑ ↔ \xae\x3c ;
 ዐ ↔ \xae ;
 ዒ ↔ \xaf\x3e ;
-ዔ ↔ \xaf\x3f ;
+ዔ ↔ \xaf\x40 ;
+ዔ ← \xaf\x3f ;
 ዓ ↔ \xaf ;
 ዕ ↔ \xb0 ;
 ዖ ↔ \xb1 ;
@@ -225,14 +228,14 @@
 ዴ ↔ \xc8 ;
 ድ ↔ \xc9 ;
 ዶ ↔ \xca ;
+ጀ ↔ \xcb ;
 ጁ ↔ \xcc ;
 ጂ ↔ \xcd\x3d ;
+ጇ ↔ \xcd\x44 ;
 ጃ ↔ \xcd ;
 ጄ ↔ \xce ;
 ጅ ↔ \xcf ;
 ጆ ↔ \xd0 ;
-ጇ ↔ \xcb\x44 ;
-ጀ ↔ \xcb ;
 ጉ ↔ \xd1\x3c ;
 ጊ ↔ \xd1\x3e ;
 ጌ ↔ \xd1\x40 ;
@@ -263,6 +266,7 @@
 ጯ ↔ \xe1 ;
 ጱ ↔ \xe3 ;
 ጲ ↔ \xe2\x3e ;
+ጲ ← \xe2\x3d ;
 ጴ ↔ \xe2\x3f ;
 ጰ ↔ \xe2 ;
 ጵ ↔ \xe5 ;
@@ -270,7 +274,7 @@
 ጷ ↔ \xe4\x44 ;
 ጳ ↔ \xe4 ;
 ጹ ↔ \xe8 ;
-ጺ ↔ \xe7\x3e ; 
+ጺ ↔ \xe7\x3d ; 
 ጼ ↔ \xe7\x3f ;
 ጸ ↔ \xe7 ;
 ጽ ↔ \xea ;
@@ -279,8 +283,10 @@
 ጻ ↔ \xe9 ;
 ፁ ↔ \xec\x3c ;
 ፀ ↔ \xec ;
-ፄ ↔ \xed\x3f ;
-ፂ ↔ \xed ;
+ፄ ↔ \xed\x40 ;
+ፄ ← \xed\x3f ;
+ፂ ↔ \xed\x3d ;
+ፃ ↔ \xed ;
 ፅ ↔ \xee ;
 ፆ ↔ \xef ;
 ፈ ↔ \xf0 ;
@@ -308,6 +314,12 @@
 ። ↔ \x3a\x3a ;
 ፦ ↔ \x3a\x2d ;
 ፡ ↔ \x3a ;
+#
+#
+# Strip away any remaining diacritical marks
+#
+#        <    =    >    ?    @    A    B    C    D    E    F
+ ← [ \x3c \x3d \x3e \x3f \x40 \x41 \x42 \x43 \x44 \x45 \x46 ] ;
 #
 #
 :: ([\x20-\u2122]) ;
