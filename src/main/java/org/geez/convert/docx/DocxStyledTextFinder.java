@@ -133,6 +133,7 @@ public class DocxStyledTextFinder extends CallbackImpl {
 						List<Object> rObjects = r.getContent();
 						for(Object robj: rObjects) {
 							if ( "instrText".equals( ((JAXBElement<Text>)robj).getName().getLocalPart() ) ) {
+								// docx4j conflates w:instrText with w:Text , we must avoid converting w:instrText content.
 								continue;
 							}
 							Object tobj = XmlUtils.unwrap(robj);
