@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+
 import org.docx4j.TraversalUtil.CallbackImpl;
 import org.docx4j.XmlUtils;
 import org.docx4j.wml.P;
@@ -41,7 +43,8 @@ public class DocxStyledTextFinder extends CallbackImpl {
     }
     
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<Object> apply(Object o) {
     	if  (o instanceof org.docx4j.wml.P) {
 			P p = (org.docx4j.wml.P)o;
@@ -129,6 +132,9 @@ public class DocxStyledTextFinder extends CallbackImpl {
 						 */
 						List<Object> rObjects = r.getContent();
 						for(Object robj: rObjects) {
+							if ( "instrText".equals( ((JAXBElement<Text>)robj).getName().getLocalPart() ) ) {
+								continue;
+							}
 							Object tobj = XmlUtils.unwrap(robj);
 							if ( tobj instanceof org.docx4j.wml.Text ) {
 								// check here if styleIdToFont.get(styleName) might be null -?
